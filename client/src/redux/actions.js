@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios'
 import {
     GET_ALL_COUNTRIES,
     GET_COUNTRY_NAME,
@@ -18,8 +18,10 @@ import {
 
 export const getAllCountries = () =>{
     return async(dispatch) => {
-        await axios.get('http://localhost:3001/countries')
+        await axios.get('http://localhost:3001/countries/')
         .then((res) => res.data)
-        .then((data) => dispatch({type: GET_ALL_COUNTRIES, payload: data}))
+        .then((data) => { 
+            console.log('payload:', data)
+            dispatch({type: GET_ALL_COUNTRIES, payload: data})})
     }
 }
