@@ -10,7 +10,7 @@ function Card(props){
             <img className={style.Cardimage} src={flag} alt={name}/>
             <h3 className={style.name}>{name}</h3>
             <h3 className={style.nmae}>{region}</h3>
-            <div><Link to={`/detail/${id}`}><button></button></Link></div>
+            <div><Link to={`/detail/${id}`}><button>Detail Country</button></Link></div>
             <></>
         </div>
     )

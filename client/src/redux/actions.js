@@ -25,3 +25,32 @@ export const getAllCountries = () =>{
             dispatch({type: GET_ALL_COUNTRIES, payload: data})})
     }
 }
+
+export const getCountryName = (name) => {
+    return async(dispatch) =>{
+        dispatch({type: GET_COUNTRY_NAME, payload: []})
+        axios.get('http://localhost:3001/countries/name?name='+name)
+        .then((res) => res.data)
+        .then((data) => dispatch({type: GET_COUNTRY_NAME, payload: data}))
+    }
+}
+
+export const getCountryDetail = (id) => {
+    return async(dispatch) => {
+        dispatch({type: GET_COUNTRY_DETAIL, payload: []});
+        await axios.get(`http://localhost:3001/countries/${id}`)
+        .then((res) => res.data)
+        .then((data) => dispatch({type: GET_COUNTRY_DETAIL, payload: data}))
+        .catch((err) => console.log(err))
+    }
+}
+
+
+//Order Country ---------------------->>>
+
+export const orderContinent = () =>{
+    return{
+        type: GET_FILTER_CONTINENT
+    }
+}
+
