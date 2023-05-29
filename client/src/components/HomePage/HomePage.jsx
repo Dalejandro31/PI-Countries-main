@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllCountries,
-        orderContinent} from "../../redux/actions";
+import { 
+  getAllCountries,
+  filterContinent,
+  orderAsc,
+  orderDesc,
+  populatinAsc,
+  populationDesc} from "../../redux/actions";
 import Card from '../Card/CardCountry';
 import NavBar from '../Nav/NavBar';
 import Pagination from "../pagination/Pagination";
@@ -9,7 +14,9 @@ import Pagination from "../pagination/Pagination";
 function Home(){
   const dispatch = useDispatch();
   const countries = useSelector(state => state.countries);
+  const uniqueRegions = [... new Set(countries.map(country => country.region))];
   const [/*ordered */, setOrdered] = useState('');
+  const [selectedRegion, setSelectedRegion] = useState('All');
   const [currentPage, setCurrentPage] = useState(1)
   const [elementsPerPage, /*setElementPerPage */] = useState(10)
   
@@ -39,8 +46,25 @@ function Home(){
 
   const handleContinent = (e) =>{
     e.preventDefault();
-    dispatch(orderContinent(e.target.value))
+    dispatch(filterContinent(e.target.value))
+    setSelectedRegion(e.target.value);
+  }
+
+  const handleSort = (e) => {
+    e.preventDefault();
+    e.target.value === 'Asc'
+    ? dispatch(orderAsc(e.target.value))
+    : dispatch(orderDesc(e.target.value))
     setOrdered(`order ${e.target.value}`)
+  }
+
+  const handlepopulationOrder = (e) => {
+    e.preventDefault();
+    e.target.value === 'populationAsc'
+    ? dispatch(populatinAsc(e.target.value))
+    : dispatch(populationDesc(e.target.value))
+    setOrdered(`order ${e.target.value}`)
+    console.log(populatinAsc());
   }
 
   return(
@@ -50,15 +74,29 @@ function Home(){
       <div>
         <select
           onChange={(e) => handleContinent(e)}
-          className="continent">
+          className="continent"
+          value={selectedRegion}
+          >
             <option value='All'>All Countries</option>
             {
-              countries.map((e, index) => (
-                <option value={e.region} key={index}>{e.region}</option>
+              uniqueRegions.map((region, index) => (
+                <option value={region} key={index}>{region}</option>
               ))
             }
           </select>
       </div>
+
+      <div>
+        <div>
+            <button className="Az" value='Asc' onClick={(e) => handleSort(e)}>A - Z</button>
+            <button className="ZA" value='Desc' onClick={(e) => handleSort(e)}>Z - A</button>
+        </div>
+        <div>
+          <button className="popAsc" value='populationAsc' onClick={(e) => handlepopulationOrder(e)}>populatinAsc</button>
+          <button className="popDesc" value='populationDesc' onClick={(e) => handlepopulationOrder(e)}>populatinDesc</button>
+        </div>
+      </div>
+
       <div>
         <div>
           {

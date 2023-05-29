@@ -41,10 +41,30 @@ const configReducer = (state = initialState, action) => {
                 countryDetail: action.payload
             };
         case GET_FILTER_CONTINENT:
-            const continentFiltered = state.filterCountry.filter(e => e.region.includes(action.payload))
+            const fileteredRegion = state.filterCountry.filter(e => e.region.includes(action.payload))
             return{
                 ...state,
-                countries: action.payload === 'All' ? state.filterCountry: continentFiltered
+                countries: action.payload === 'All' ? state.filterCountry : fileteredRegion
+            }
+        case GET_ORDER_AZ:
+            return{
+                ...state,
+                countries: state.countries.slice().sort((a, b) => a.name.localeCompare(b.name))
+            };
+        case GET_ORDER_ZA:
+            return{
+                ...state,
+                countries: state.countries.slice().sort((a, b) => b.name.localeCompare(a.name)) 
+            };        
+        case GET_ORDER_POPULATION_ASC:
+            return{
+                ...state,
+                countries: state.countries.slice().sort((a, b) => b.population - a.population)  
+            }
+        case GET_ORDER_POPULATION_DESC:
+            return{
+                ...state,
+                countries: state.countries.slice().sort((a, b) => a.population - b.population)
             }        
         default:
             return {...state};

@@ -48,9 +48,38 @@ export const getCountryDetail = (id) => {
 
 //Order Country ---------------------->>>
 
-export const orderContinent = () =>{
+export const filterContinent = (region) => {
     return{
-        type: GET_FILTER_CONTINENT
+        type: GET_FILTER_CONTINENT,
+        payload: region,
+    }
+}
+
+//ORDER ASCENDENTE DESCENDENTE ------------------->>>
+
+export const orderAsc = () => {
+    return{
+        type: GET_ORDER_AZ,
+    }
+}
+
+export const orderDesc = () => {
+    return{
+        type: GET_ORDER_ZA,
+    }
+}
+
+//ORDER POPULATION --------------------->>>
+
+export const populatinAsc = () => {
+    return{
+        type:GET_ORDER_POPULATION_ASC,
+    }
+}
+
+export const populationDesc = () => {
+    return{
+        type: GET_ORDER_POPULATION_DESC,
     }
 }
 
