@@ -16,6 +16,7 @@ const initialState= {
     countries : [],
     filterCountry: [],
     countryDetail: [],
+    activities: [],
 }
 
 const configReducer = (state = initialState, action) => {
@@ -65,7 +66,17 @@ const configReducer = (state = initialState, action) => {
             return{
                 ...state,
                 countries: state.countries.slice().sort((a, b) => a.population - b.population)
-            }        
+            }
+        case GET_ACTIVITIES:
+            return{
+                ...state,
+                activities: action.payload
+            }
+        case POST_ACTIVITY:
+            return{
+                ...state,
+                activities: state.activities.concat(action.payload)
+            }           
         default:
             return {...state};
             

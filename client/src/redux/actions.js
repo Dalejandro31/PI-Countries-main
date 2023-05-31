@@ -83,3 +83,29 @@ export const populationDesc = () => {
     }
 }
 
+export const getActivity = () => {
+    return async(dispatch) => {
+        await axios.get(`http://localhost:3001/activities/`)
+        .then((res) => {
+            let response = res.data?.map(e => e.name)
+            dispatch({type: GET_ACTIVITIES, payload: response})
+        });
+    }
+};
+
+export const postActivity = (newActivity) => {
+    return async(dispatch) => {
+        try {
+            const response = await axios.post('http://localhost:3001/activities', newActivity);
+            dispatch({
+                type:POST_ACTIVITY,
+                payload: response.data,
+            });
+            alert('Activiti Created successfully');
+        } catch (error) {
+            console.log('Error', error);
+            alert('Activity not Created, try again');
+        }
+    }
+};
+
