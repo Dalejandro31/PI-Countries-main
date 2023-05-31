@@ -20,7 +20,7 @@ function Form(){
         difficulty: '',
         duration: '',
         season: '',
-        country : [],
+        countries : [],
     })
 
     const [ error, setError ] = useState ({
@@ -28,45 +28,30 @@ function Form(){
         difficulty: '',
         duration: '',
         season: '',
-        country : [],
+        countries : [],
     })
 
     const handleChange = (e) => {
-        const { name, value } = e.target
-
-        if(name === 'country'){
-            const selectedCountries = {...newActivity.country};
-            if(selectedCountries[value]){
-                delete selectedCountries[value];
-            }else{
-                selectedCountries[value] = true;
-            }
-            setNewActivity({
-                ...newActivity,
-                country: selectedCountries,
-            });
-        }else{
-            setNewActivity({
-                ...newActivity,
-                [name]: value
-            });
-        }
-        setError(Validation ({
+        setNewActivity({
             ...newActivity,
-            [name]: value,
-        }));
+            [e.target.name] : e.target.value,
+        })
+        setError(Validation({
+            ...newActivity,
+            [e.target.name] : e.target.value,
+        }))
     }
 
     const handleCheked = (e) => {
         if(e.target.checked) {
             setNewActivity ({
                 ...newActivity,
-                country : [...newActivity.country, e.target.value]
+                countries : [...newActivity.countries, e.target.value]
             })
         }else{
             setNewActivity({
                 ...newActivity,
-                country : newActivity.country.filter(x => x !== e.target.value)
+                country : newActivity.countries.filter(x => x !== e.target.value)
             })
         }
     }
@@ -82,7 +67,7 @@ function Form(){
             difficulty: '',
             duration: '',
             season: '',
-            country : [],
+            countries : [],
         })
     }
 
@@ -143,26 +128,17 @@ function Form(){
                     <h2>Escoge los paises a los que les asiganaras tu nueva actividad</h2>
                     <div>
                         <div>
-                            <label>Paises</label>
-                                <select multiple value={Object.keys(newActivity.country)} onChange={handleChange} name='country'>
-                                    
-                                    {countries.length >= 1 &&
-                                    countries.map((elem, index) => (
-                                        <option key={index} value={elem.name}>
-                                            {elem.name}
-                                        </option>
-                                    ))}
-                                </select>
+                            {
+                                countries.length >= 1 ?
+                                countries?.map((elem, index) => (
+                                    <label htmlFor='countries' key={index}>
+                                        <input type='checkbox' name='countries' value={elem.name} key={index} onChange={handleCheked}/>
+                                        {elem.name}
+                                    </label>
+                                ))
+                                :undefined
+                            }
                         </div>
-                    </div>
-
-                    <div>
-                        <h3>Paises seleccinados: </h3>
-                        <ul>
-                            {Object.keys(newActivity.country).map((country, index) => (
-                                <li key={index}>{country}</li>
-                            ))}
-                        </ul>
                     </div>
                 
                 <div>
