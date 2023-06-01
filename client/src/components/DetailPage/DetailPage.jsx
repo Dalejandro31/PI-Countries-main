@@ -42,6 +42,14 @@ function Detail(){
                             <p>{selector.area}</p>
                             <h2>Population: </h2>
                             <p>{selector.population}</p>
+                            <h2>Activity: </h2>
+                            <ul>
+                            {selector.activities.map((activity) => (
+                                <li key={activity.id}>{activity.name}</li>
+                            ))}
+                            </ul>
+                            
+                            
                         </div>
 
 

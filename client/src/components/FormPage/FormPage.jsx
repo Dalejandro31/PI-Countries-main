@@ -15,20 +15,20 @@ function Form(){
         dispatch(getAllCountries())
     },[dispatch])
 
-    const [ newActivity, setNewActivity ] = useState ({
+    const [newActivity, setNewActivity] = useState({
         name: '',
         difficulty: '',
         duration: '',
         season: '',
-        countries : [],
-    })
+        country: [],
+    });
 
     const [ error, setError ] = useState ({
         name: '',
         difficulty: '',
         duration: '',
         season: '',
-        countries : [],
+        country : [],
     })
 
     const handleChange = (e) => {
@@ -42,39 +42,31 @@ function Form(){
         }))
     }
 
-    const handleCheked = (e) => {
-        if(e.target.checked) {
-            setNewActivity ({
+    const handleChecked = (e) => {
+        if( e.target.checked ){
+            setNewActivity({
                 ...newActivity,
-                countries : [...newActivity.countries, e.target.value]
+                country : [...newActivity.country, e.target.value]
             })
         }else{
             setNewActivity({
                 ...newActivity,
-                country : newActivity.countries.filter(x => x !== e.target.value)
+                country : newActivity.country.filter( (country) => country !== e.target.value)
             })
         }
     }
-
     const handleSubmit = (e) => {
         e.preventDefault();
         // axios.post('http://localhost:3001/activities', newActivity)
         // .then(res => alert('Activity created succesfully'))
-        // .then(err => alert('Activity not crated, try again'))
-        dispatch(postActivity(newActivity));
+        // .then(err => alert('Activity not crated, try again')
+        dispatch(postActivity(newActivity))
         setNewActivity({
             name: '',
             difficulty: '',
             duration: '',
             season: '',
-            countries : [],
-        })
-    }
-
-    const hanleCountryChange = (e) => {
-        setNewActivity({        
-            ...newActivity,
-            country: [e.target.value]
+            country : [],
         })
     }
 
@@ -131,8 +123,8 @@ function Form(){
                             {
                                 countries.length >= 1 ?
                                 countries?.map((elem, index) => (
-                                    <label htmlFor='countries' key={index}>
-                                        <input type='checkbox' name='countries' value={elem.name} key={index} onChange={handleCheked}/>
+                                    <label htmlFor='country' key={index}>
+                                        <input type='checkbox' name='country' value={elem.name} key={index} onChange={handleChecked}/>
                                         {elem.name}
                                     </label>
                                 ))
@@ -140,21 +132,14 @@ function Form(){
                             }
                         </div>
                     </div>
+
                 
                 <div>
-                <button
-                    type='submit'
-                    onClick={handleSubmit}
-                    disabled={
-                        newActivity.name === '' ||
-                        newActivity.difficulty === '' ||
-                        newActivity.duration === '' ||
-                        newActivity.season === '' ||
-                        newActivity.country.length === 0
+                    {
+                        newActivity.name !== '' && newActivity.difficulty !== '' && newActivity.duration !== '' && newActivity.season !== '' && newActivity.country.length >=1
+                        ? <button className='' type='submit' onClick={ (e) => handleSubmit(e)}>submit</button>
+                        : <button disabled className=''>submit</button>
                     }
-                >
-                    Submit
-                </button>
                 </div>
             </form>
         </div>
