@@ -39,7 +39,10 @@ const configReducer = (state = initialState, action) => {
             console.log('details', state.countryDetail)    
             return{
                 ...state,
-                countryDetail: action.payload
+                countryDetail: {
+                    ...action.payload,
+                    activities: action.payload.activities || [],
+                }
             };
         case GET_FILTER_CONTINENT:
             const fileteredRegion = state.filterCountry.filter(e => e.region.includes(action.payload))
@@ -72,6 +75,12 @@ const configReducer = (state = initialState, action) => {
                 ...state,
                 activities: action.payload
             }
+        case GET_FILTER_ACTIVITY:
+            const activiyFiltered = state.filterCountry.filter(e => e.activities.includes(action.payload)) 
+            return {
+                ...state,
+                countries: action.payload === 'All' ? state.filterCountry : activiyFiltered
+            }    
         case POST_ACTIVITY:
             return{
                 ...state,

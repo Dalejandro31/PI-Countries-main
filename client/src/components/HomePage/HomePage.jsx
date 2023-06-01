@@ -6,7 +6,9 @@ import {
   orderAsc,
   orderDesc,
   populatinAsc,
-  populationDesc} from "../../redux/actions";
+  populationDesc,
+  filterActivity,
+  getActivity } from "../../redux/actions";
 import Card from '../Card/CardCountry';
 import NavBar from '../Nav/NavBar';
 import Pagination from "../pagination/Pagination";
@@ -15,6 +17,7 @@ function Home(){
   const dispatch = useDispatch();
   const countries = useSelector(state => state.countries);
   const uniqueRegions = [... new Set(countries.map(country => country.region))];
+  const activities = useSelector(state => state.activities)
   const [/*ordered */, setOrdered] = useState('');
   const [selectedRegion, setSelectedRegion] = useState('All');
   const [currentPage, setCurrentPage] = useState(1)
@@ -23,6 +26,7 @@ function Home(){
 
   useEffect(()=>{ 
     dispatch(getAllCountries());
+    dispatch(getActivity());
   },[dispatch]);
 
   //logica para obtener los paises para la pagina actual 
@@ -39,6 +43,12 @@ function Home(){
     e.preventDefault();
     setCurrentPage( currentPage - 1); 
   };
+
+  const handleActivity = (e) => {
+    e.preventDefault();
+    dispatch(filterActivity(e.target.value));
+    setOrdered(`order ${e.target.value}`);
+  }
 
   const handlePageCh =  (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -84,6 +94,22 @@ function Home(){
               ))
             }
           </select>
+      </div>
+
+      <div>
+        <select
+          onChange={(e) => handleActivity(e)}
+          className="activities"
+        >
+          <option value='All'>All Activities</option>
+          {
+            activities?.map((e, index) => (
+              <option value={e} key={index}>
+                {e}
+              </option>
+            ))
+          }
+        </select>
       </div>
 
       <div>

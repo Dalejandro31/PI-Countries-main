@@ -83,9 +83,17 @@ export const populationDesc = () => {
     }
 }
 
+// FILTER ACTIVITY --------------------->>>>
+export const filterActivity = (activities) => {
+    return{
+        type: GET_FILTER_ACTIVITY,
+        payload: activities
+    }
+}
+
 export const getActivity = () => {
     return async(dispatch) => {
-        await axios.get(`http://localhost:3001/activities/`)
+        await axios.get(`http://localhost:3001/activities`)
         .then((res) => {
             let response = res.data?.map(e => e.name)
             dispatch({type: GET_ACTIVITIES, payload: response})

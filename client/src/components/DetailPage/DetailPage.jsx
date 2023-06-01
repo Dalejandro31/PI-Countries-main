@@ -42,17 +42,22 @@ function Detail(){
                             <p>{selector.area}</p>
                             <h2>Population: </h2>
                             <p>{selector.population}</p>
-                            <h2>Activity: </h2>
+                            <h1>Activity: </h1>
                             <ul>
                             {selector.activities.map((activity) => (
-                                <li key={activity.id}>{activity.name}</li>
+                                <li key={activity.id}>
+                                    <h3>Name: </h3>
+                                    <p>{activity.name}</p>
+                                    <h3>Difficulty: </h3>
+                                    <p>{activity.difficulty}</p>
+                                    <h3>Duration: </h3>
+                                    <p>{activity.duration}</p>
+                                    <h3>Season: </h3>
+                                    <p>{activity.season}</p>
+                                </li>
                             ))}
                             </ul>
-                            
-                            
                         </div>
-
-
                     </div>
                 ) : undefined
             }
