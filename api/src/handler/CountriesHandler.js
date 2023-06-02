@@ -46,7 +46,8 @@ async function getAllCountries(req,res){
         }
     }else{
         try {
-            res.json(filterDB);
+            // res.json(filterDB);
+            res.json(filterDB.map(country => country.toJSON()));
         } catch (error) {
             res.status(STATUS_ERROR).json({message:error})
         }

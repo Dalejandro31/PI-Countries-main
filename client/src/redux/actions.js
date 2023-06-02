@@ -84,20 +84,23 @@ export const populationDesc = () => {
 }
 
 // FILTER ACTIVITY --------------------->>>>
-export const filterActivity = (activities) => {
+export const filterActivity = (activity) => {
     return{
         type: GET_FILTER_ACTIVITY,
-        payload: activities
+        payload: activity
     }
 }
 
 export const getActivity = () => {
     return async(dispatch) => {
-        await axios.get(`http://localhost:3001/activities`)
-        .then((res) => {
-            let response = res.data?.map(e => e.name)
-            dispatch({type: GET_ACTIVITIES, payload: response})
-        });
+        try {
+            const response = await axios.get(`http://localhost:3001/activities`)
+            let activities = response.data?.map((e) => e)
+            dispatch({type: GET_ACTIVITIES, payload: activities})
+        } catch (error) {
+            console.log('error', error)
+            alert('no hay actividades creadas');
+        }
     }
 };
 

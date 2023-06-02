@@ -13,12 +13,16 @@ import Card from '../Card/CardCountry';
 import NavBar from '../Nav/NavBar';
 import Pagination from "../pagination/Pagination";
 
+
 function Home(){
+  
   const dispatch = useDispatch();
   const countries = useSelector(state => state.countries);
-  const uniqueRegions = [... new Set(countries.map(country => country.region))];
   const activities = useSelector(state => state.activities)
+  const uniqueRegions = [...new Set(countries.map(country => country.region))];
+  const uniqueActivity = [...new Set(activities.map(country => country.name))]
   const [/*ordered */, setOrdered] = useState('');
+  const [selectedActivity, setSelectedActivity] = useState('All');
   const [selectedRegion, setSelectedRegion] = useState('All');
   const [currentPage, setCurrentPage] = useState(1)
   const [elementsPerPage, /*setElementPerPage */] = useState(10)
@@ -46,8 +50,9 @@ function Home(){
 
   const handleActivity = (e) => {
     e.preventDefault();
-    dispatch(filterActivity(e.target.value));
-    setOrdered(`order ${e.target.value}`);
+    const activity = e.target.value;
+    setSelectedActivity(activity);
+    dispatch(filterActivity(activity));
   }
 
   const handlePageCh =  (pageNumber) => {
@@ -100,10 +105,11 @@ function Home(){
         <select
           onChange={(e) => handleActivity(e)}
           className="activities"
+          value={selectedActivity}
         >
           <option value='All'>All Activities</option>
           {
-            activities?.map((e, index) => (
+            uniqueActivity.map((e, index) => (
               <option value={e} key={index}>
                 {e}
               </option>
@@ -153,6 +159,7 @@ function Home(){
             name={country.name}
             flag={country.flag}
             region={country.region}
+            activities ={country.activities}
           />
         ))}
       </div>

@@ -27,12 +27,19 @@ async function getCountriesDB(){
 
     const infoApi = await getCountries();
 
-    infoApi.forEach((info)=>{
-        Country.findOrCreate({
+    infoApi.forEach(async(info)=>{
+        const country = await Country.findOrCreate({
             where: info,
-        })
+        });
+
+        if(info.activities){
+            info.activities.forEach(async (activityInfo) =>{
+                const activity = await Activity.create(activityInfo);
+                await activity.addCountry(country);
+            })
+        }
     });
-    const getAll= await Country.findAll();
+    const getAll= await Country.findAll({include: Activity});
     return getAll;
 }
 

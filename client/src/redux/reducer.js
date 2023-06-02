@@ -76,7 +76,7 @@ const configReducer = (state = initialState, action) => {
                 activities: action.payload
             }
         case GET_FILTER_ACTIVITY:
-            const activiyFiltered = state.filterCountry.filter(e => e.activities.includes(action.payload)) 
+            const activiyFiltered = state.filterCountry.filter((country) => country.activities.find((activity) => activity.name.includes(action.payload))) 
             return {
                 ...state,
                 countries: action.payload === 'All' ? state.filterCountry : activiyFiltered
