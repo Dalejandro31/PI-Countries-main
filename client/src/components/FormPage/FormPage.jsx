@@ -15,6 +15,8 @@ function Form(){
         dispatch(getAllCountries())
     },[dispatch])
 
+    const [hoveredField, setHoveredField] = useState(null);
+
     const [newActivity, setNewActivity] = useState({
         name: '',
         difficulty: '',
@@ -32,14 +34,25 @@ function Form(){
     })
 
     const handleChange = (e) => {
+        // setNewActivity({
+        //     ...newActivity,
+        //     [e.target.name]: e.target.value,
+        // });
+        // setError(Validation({
+        //     ...newActivity,
+        //     [e.target.name]: e.target.value,
+        // }));
         setNewActivity({
             ...newActivity,
-            [e.target.name] : e.target.value,
-        })
-        setError(Validation({
-            ...newActivity,
-            [e.target.name] : e.target.value,
-        }))
+            [e.target.name]: e.target.value,
+          });
+          setError(
+            Validation({
+              ...newActivity,
+              [e.target.name]: e.target.value,
+            })
+          );
+          setHoveredField(null);
     }
 
     const handleChecked = (e) => {
@@ -74,7 +87,9 @@ function Form(){
         return newActivity[fieldName].trim() === '';
     }
 
-    
+    const isCountrySelected = () => {
+        return newActivity.country.length === 0;
+    }
 
 
     return(
@@ -86,29 +101,71 @@ function Form(){
 
             <form>
                 <h1> CREATE YOUR ACTIVITY </h1>
-
+{/* ---------------------------------------------------------->> NAME <<----------------------------------------------------------*/}
                 <div>
                     <label htmlFor='name'>Nombre</label>
-                    <input className={`${style.inputForms} ${isFieldEmpty('name') && style.inputFormsEmpty}`} value={newActivity.name}  type="text" name='name' onChange={handleChange}/>
+                    <input 
+                        className={`${style.inputForms} ${isFieldEmpty('name') && style.inputFormsEmpty}`} 
+                        value={newActivity.name}  
+                        type="text" 
+                        name='name' 
+                        onChange={handleChange}
+                        onMouseEnter={() => setHoveredField('name')}
+                        onMouseLeave={() => setHoveredField(null)}
+                        />
                 </div>
                 <div>
+                    {hoveredField === 'name' && error.name && (<span className={style.errorMessage}>{error.name}</span>)}
+                </div>
+{/* ---------------------------------------------------------->> DIFFICULTY <<----------------------------------------------------------*/}
+                <div>
                     <label>Dificultad</label>
-                        <select name="difficulty" value={newActivity.difficulty} onChange={handleChange}>
+                        <select  
+                            className={`${style.inputForms} ${isFieldEmpty('difficulty') && style.inputFormsEmpty}`} 
+                            name="difficulty" 
+                            value={newActivity.difficulty} 
+                            onChange={handleChange}
+                            onMouseEnter={() => setHoveredField('difficulty')}
+                            onMouseLeave={() => setHoveredField(null)}
+                        >
                             <option value='' >Seleccione una opción</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
                                 <option value="5">5</option>
-                        </select>   
+                        </select>  
                 </div>
+                <div>
+                    {hoveredField === 'difficulty' && error.difficulty && (<span className={style.errorMessage}>{error.difficulty}</span>)}
+                </div>
+{/* ---------------------------------------------------------->> DURATION <<----------------------------------------------------------*/}
                 <div>
                     <label>Duracion (horas)</label>
-                    <input className={`${style.inputForms} ${isFieldEmpty('name') && style.inputFormsEmpty}`} value={newActivity.duration} type="number" name='duration' onChange={handleChange}/>
+                    <input 
+                        className={`${style.inputForms} ${isFieldEmpty('duration') && style.inputFormsEmpty}`} 
+                        value={newActivity.duration} 
+                        type="number" 
+                        name='duration' 
+                        onChange={handleChange}
+                        onMouseEnter={() => setHoveredField('duration')}
+                        onMouseLeave={() => setHoveredField(null)}
+                        />
                 </div>
                 <div>
+                    {hoveredField === 'duration' && error.duration && <span className={style.errorMessage}>{error.duration}</span>}
+                </div>
+{/* ---------------------------------------------------------->> SEASON <<----------------------------------------------------------*/}
+                <div>
                     <label>Temporada</label>
-                        <select name="season" value={newActivity.season} onChange={handleChange}>
+                        <select
+                            className={`${style.inputForms} ${isFieldEmpty('difficulty') && style.inputFormsEmpty}`} 
+                            name="season" 
+                            value={newActivity.season} 
+                            onChange={handleChange} 
+                            onMouseEnter={() => setHoveredField('season')}
+                            onMouseLeave={() => setHoveredField(null)}
+                        >
                             <option value=''>Seleccione una opción</option>
                             <option value="Summer">Summer</option>
                             <option value="Fall">Fall</option>
@@ -116,7 +173,10 @@ function Form(){
                             <option value="Spring">Spring</option>
                         </select>
                 </div>
-                
+                <div>
+                    {hoveredField === 'season' && error.season && (<span className={style.errorMessage}>{error.season}</span>)}  
+                </div>
+{/* ---------------------------------------------------------->> COUNTRY <<----------------------------------------------------------*/}
                     <h2>Escoge los paises a los que les asiganaras tu nueva actividad</h2>
                     <div>
                         <div>
@@ -131,6 +191,7 @@ function Form(){
                                 :undefined
                             }
                         </div>
+                        {isCountrySelected() && <p className={style.errorMessage}>Debe seleccionar al menos un país</p>}
                     </div>
 
                 

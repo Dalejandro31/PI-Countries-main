@@ -18,50 +18,70 @@ function Detail(){
     },[dispatch,id])
 
     return(
-        <div>
-            {
-                selector.hasOwnProperty('name')?(
+        <div className={style.contenedorPadre}>
+            {selector.hasOwnProperty('name') ? (
+                <div className={style.contenedorHijo}>
                     <div>
                         <h1>Detail</h1>
-                        <Link to = '/home'><button type='submit' className=" ">Home Page</button></Link>
-                        <Link to = '/form'><button type='submit' className=" ">Form Page</button></Link>
-                        <Link to = '/'><button type='submit' className=" ">Landing Page</button></Link>
-                        <div>
-                        <img className="" src={selector.flag} alt={selector.name}/>
+                        <Link to='/home'><button type='submit'>Home Page</button></Link>
+                        <Link to='/form'><button type='submit'>Form Page</button></Link>
+                        <Link to='/'><button type='submit'>Landing Page</button></Link>
+                    </div>
+                    <div className={style.divImagen}>
+                        <img className={style.image} src={selector.flag} alt={selector.name} />
+                    </div>
+                    <div className={style.divDescription}>
+                        <div className={style.contSpan}>
+                            <span className={style.label}>Name:</span>
+                            <span className={style.label}>{selector.name}</span>
                         </div>
-                        <div>
-                            <h2>Name: </h2>
-                            <p>{selector.name}</p>
-                            <h2>Continent: </h2>
-                            <p>{selector.region}</p>
-                            <h2>Capital</h2>
-                            <p>{selector.capital}</p>
-                            <h2>Subregion: </h2>
-                            <p>{selector.subregion}</p>
-                            <h2>Area</h2>
-                            <p>{selector.area}</p>
-                            <h2>Population: </h2>
-                            <p>{selector.population}</p>
-                            <h1>Activity: </h1>
-                            <ul>
-                            {selector.activities.map((activity) => (
-                                <li key={activity.id}>
-                                    <h3>Name: </h3>
-                                    <p>{activity.name}</p>
-                                    <h3>Difficulty: </h3>
-                                    <p>{activity.difficulty}</p>
-                                    <h3>Duration: </h3>
-                                    <p>{activity.duration}</p>
-                                    <h3>Season: </h3>
-                                    <p>{activity.season}</p>
-                                </li>
-                            ))}
-                            </ul>
+                        <div className={style.contSpan}>
+                            <span className={style.label}>Continent:</span>
+                            <span className={style.label}>{selector.region}</span>
+                        </div>
+                        <div className={style.contSpan}>
+                            <span className={style.label}>Capital:</span>
+                            <span className={style.label}>{selector.capital}</span>
+                        </div>
+                        <div className={style.contSpan}>
+                            <span className={style.label}>Subregion:</span>
+                            <span className={style.label}>{selector.subregion}</span>
+                        </div>
+                        <div className={style.contSpan}>
+                            <span className={style.label}>Area:</span>
+                            <span className={style.label}>{selector.area}</span>
+                        </div>
+                        <div className={style.contSpan}>
+                            <span className={style.label}>Population:</span>
+                            <span className={style.label}>{selector.population}</span>
                         </div>
                     </div>
-                ) : undefined
-            }
-            
+                    
+                    <h1>Activity:</h1>
+                    <div className={style.divDescription}>
+                        {selector.activities.map((activity) => (
+                            <div className={style.activityItem} key={activity.id}>
+                                <div className={style.contSpan}>
+                                    <span className={style.label}>Name: </span>
+                                    <span className={style.label}>{activity.name}</span>
+                                </div>
+                                <div className={style.contSpan}>
+                                    <span className={style.label}>Difficulty: </span>
+                                    <span className={style.label}>{activity.difficulty}</span>
+                                </div>
+                                <div className={style.contSpan}>
+                                    <span className={style.label}>Duration: </span>
+                                    <span className={style.label}>{activity.duration}</span>
+                                </div>
+                                <div className={style.contSpan}>
+                                    <span className={style.label}>Season: </span>
+                                    <span className={style.label}>{activity.season}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ) : undefined}
         </div>
     )
 }

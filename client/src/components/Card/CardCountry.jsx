@@ -1,17 +1,25 @@
 import style from './CardCountry.module.css';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Card(props){
     const { id, name, flag, region } = props;
+    const navigate = useNavigate();
+    const handleImageClick = () => {
+        navigate(`/detail/${id}`);
+    };
+
 
     return(
-        <div>
-            <img className={style.Cardimage} src={flag} alt={name}/>
-            <h3 className={style.name}>{name}</h3>
-            <h3 className={style.nmae}>{region}</h3>
-            <div><Link to={`/detail/${id}`}><button>Detail Country</button></Link></div>
-            <></>
+        <div className={style.card}>
+            <div className={style.CardInfo}>
+                <div className={style.content}>
+                    <p className={style.name}>{name}</p>
+                    <p className={style.region}>{region}</p>
+                </div>
+            <img className={style.Cardimage} src={flag} alt={name} onClick={handleImageClick}/>
+            </div>
+            {/* <div><Link to={`/detail/${id}`}><button>Detail Country</button></Link></div> */}
         </div>
     )
 }

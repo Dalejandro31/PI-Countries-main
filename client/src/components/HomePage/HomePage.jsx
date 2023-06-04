@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import style from './Home.module.css'
 import { useSelector, useDispatch } from "react-redux";
 import { 
   getAllCountries,
@@ -83,9 +84,8 @@ function Home(){
   }
 
   return(
-    <div>
+    <div className={style.homeContainer}>
       <NavBar/>
-      <h1>Home Page</h1>
       <div>
         <select
           onChange={(e) => handleContinent(e)}
@@ -151,7 +151,7 @@ function Home(){
           </div>
         </div>
       </div>
-      <div>
+      <div className={style.cardHome}>
         {currentElements.map((country) =>(
           <Card
             key={country.id}

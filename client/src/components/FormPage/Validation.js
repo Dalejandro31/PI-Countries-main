@@ -11,6 +11,26 @@ export default function Validation(newActivity){
     );
 
     let error = {} 
-    
-    
+    // Validar name
+    if(newActivity.name === '' || !regex.test(newActivity.name)){
+      error.name =
+      'El nombre es obligatorio para crear su Actividad, por favor escriba el Nombre';
+    }
+    // Validar difficulty
+    if(newActivity.difficulty === ''){
+      error.difficulty = 'La dificultad es obligatoria para crear su Actividad';
+    }
+    // Validar duration
+    if(newActivity.duration === ''){
+      error.duration = 'La duración es obligatoria para crear su Actividad';
+    }
+    // validar season
+    if(newActivity.season === ''){
+      error.season = 'La estacion es obligatoria para crear su Actividad';
+    }
+    //validar country
+    if(newActivity.country === 0){
+      error.country = 'El país es obligatorio para crear su Actividad, debe escoger al  menos unos';
+    }
+    return error;
 }
