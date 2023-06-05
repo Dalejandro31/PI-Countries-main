@@ -99,7 +99,7 @@ export const getActivity = () => {
             dispatch({type: GET_ACTIVITIES, payload: activities})
         } catch (error) {
             console.log('error', error)
-            alert('no hay actividades creadas');
+            console.log('no hay actividades creadas');
         }
     }
 };

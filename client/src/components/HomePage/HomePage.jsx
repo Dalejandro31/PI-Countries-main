@@ -86,49 +86,54 @@ function Home(){
   return(
     <div className={style.homeContainer}>
       <NavBar/>
-      <div>
-        <select
-          onChange={(e) => handleContinent(e)}
-          className="continent"
-          value={selectedRegion}
+      
+
+
+      <div className={style.containerOrdered}>
+        <div>
+            <button className={style.buttonOrdered} value='Asc' onClick={(e) => handleSort(e)}>A - Z</button>
+            <button className={style.buttonOrdered} value='Desc' onClick={(e) => handleSort(e)}>Z - A</button>
+        </div>
+        <div>
+          <button className={style.buttonOrdered} value='populationAsc' onClick={(e) => handlepopulationOrder(e)}>populatinAsc</button>
+          <button className={style.buttonOrdered} value='populationDesc' onClick={(e) => handlepopulationOrder(e)}>populatinDesc</button>
+        </div>
+      </div>
+
+      <div className={style.filterCountry}>
+        <div>
+          <select
+            onChange={(e) => handleContinent(e)}
+            className={style.selectedFilter}
+            value={selectedRegion}
+            >
+              <option value='All'>All Countries</option>
+              {
+                uniqueRegions.map((region, index) => (
+                  <option value={region} key={index}>{region}</option>
+                ))
+              }
+            </select>
+        </div>
+
+        <div>
+          <select
+            onChange={(e) => handleActivity(e)}
+            className={style.selectedFilter}
+            value={selectedActivity}
           >
-            <option value='All'>All Countries</option>
+            <option value='All'>All Activities</option>
             {
-              uniqueRegions.map((region, index) => (
-                <option value={region} key={index}>{region}</option>
+              uniqueActivity.map((e, index) => (
+                <option value={e} key={index}>
+                  {e}
+                </option>
               ))
             }
           </select>
-      </div>
-
-      <div>
-        <select
-          onChange={(e) => handleActivity(e)}
-          className="activities"
-          value={selectedActivity}
-        >
-          <option value='All'>All Activities</option>
-          {
-            uniqueActivity.map((e, index) => (
-              <option value={e} key={index}>
-                {e}
-              </option>
-            ))
-          }
-        </select>
-      </div>
-
-      <div>
-        <div>
-            <button className="Az" value='Asc' onClick={(e) => handleSort(e)}>A - Z</button>
-            <button className="ZA" value='Desc' onClick={(e) => handleSort(e)}>Z - A</button>
-        </div>
-        <div>
-          <button className="popAsc" value='populationAsc' onClick={(e) => handlepopulationOrder(e)}>populatinAsc</button>
-          <button className="popDesc" value='populationDesc' onClick={(e) => handlepopulationOrder(e)}>populatinDesc</button>
         </div>
       </div>
-
+        
       <div>
         <div>
           {

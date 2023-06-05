@@ -15,8 +15,6 @@ function Form(){
         dispatch(getAllCountries())
     },[dispatch])
 
-    const [hoveredField, setHoveredField] = useState(null);
-
     const [newActivity, setNewActivity] = useState({
         name: '',
         difficulty: '',
@@ -34,25 +32,27 @@ function Form(){
     })
 
     const handleChange = (e) => {
-        // setNewActivity({
-        //     ...newActivity,
-        //     [e.target.name]: e.target.value,
-        // });
-        // setError(Validation({
-        //     ...newActivity,
-        //     [e.target.name]: e.target.value,
-        // }));
+        const {name, value} = e.target;
+        let newValue = value;
+        if (name === 'duration') {
+            const parseValue = parseInt(value , 10)
+            if(parseValue < 0){
+                newValue = '0';
+            }else if(parseValue > 24){
+                newValue = '24';
+            }
+        }
         setNewActivity({
             ...newActivity,
-            [e.target.name]: e.target.value,
-          });
-          setError(
+            [name]: newValue,
+        });
+        setError(
             Validation({
-              ...newActivity,
-              [e.target.name]: e.target.value,
+                ...newActivity,
+                [name]: newValue,
             })
-          );
-          setHoveredField(null);
+        );
+        
     }
 
     const handleChecked = (e) => {
@@ -91,42 +91,51 @@ function Form(){
         return newActivity.country.length === 0;
     }
 
+    const sortedCountries = countries.slice().sort((a,b) => {
+        return a.name.localeCompare(b.name);
+    });
+
 
     return(
-        <div>
-            <h1>Form</h1>
-            <Link to = '/home'><button type='submit' className=" ">Home Page</button></Link>
-            <Link to = '/'><button type='submit' className=" ">Landing Page</button></Link>
-            <Link to = '/detail'><button type='submit' className=" ">Detail Page</button></Link>
+        <div className={style.container}>
+            <div>
+                <Link to = '/home'><button type='submit' className={style.buttonhome}>Home Page</button></Link>
+                <Link to = '/'><button type='submit' className={style.buttonhome}>Landing Page</button></Link>
+            </div>
+            
 
-            <form>
+            <form className={style.formPadre}>
                 <h1> CREATE YOUR ACTIVITY </h1>
+
+                <div className={style.contenedorInfoActiviy}>
+
 {/* ---------------------------------------------------------->> NAME <<----------------------------------------------------------*/}
-                <div>
-                    <label htmlFor='name'>Nombre</label>
+                <div className={style.form}> 
+                    <label className={style.label} htmlFor='name'>Nombre</label>
+                </div>
+                <div className={style.form}>
                     <input 
                         className={`${style.inputForms} ${isFieldEmpty('name') && style.inputFormsEmpty}`} 
                         value={newActivity.name}  
                         type="text" 
                         name='name' 
                         onChange={handleChange}
-                        onMouseEnter={() => setHoveredField('name')}
-                        onMouseLeave={() => setHoveredField(null)}
                         />
+                    <div>
+                        { error.name && (<span className={style.errorMessage}>{error.name}</span>)}
+                    </div>
                 </div>
-                <div>
-                    {hoveredField === 'name' && error.name && (<span className={style.errorMessage}>{error.name}</span>)}
-                </div>
+                
 {/* ---------------------------------------------------------->> DIFFICULTY <<----------------------------------------------------------*/}
-                <div>
-                    <label>Dificultad</label>
+                <div className={style.form}>
+                    <label className={style.label}>Dificultad</label>
+                </div>
+                <div className={style.form}>
                         <select  
                             className={`${style.inputForms} ${isFieldEmpty('difficulty') && style.inputFormsEmpty}`} 
                             name="difficulty" 
                             value={newActivity.difficulty} 
                             onChange={handleChange}
-                            onMouseEnter={() => setHoveredField('difficulty')}
-                            onMouseLeave={() => setHoveredField(null)}
                         >
                             <option value='' >Seleccione una opción</option>
                                 <option value="1">1</option>
@@ -137,34 +146,36 @@ function Form(){
                         </select>  
                 </div>
                 <div>
-                    {hoveredField === 'difficulty' && error.difficulty && (<span className={style.errorMessage}>{error.difficulty}</span>)}
+                    {error.difficulty && (<span className={style.errorMessage}>{error.difficulty}</span>)}
                 </div>
+
 {/* ---------------------------------------------------------->> DURATION <<----------------------------------------------------------*/}
-                <div>
-                    <label>Duracion (horas)</label>
+                <div className={style.form}>
+                    <label className={style.label}>Duracion(Horas)</label>
+                </div>
+                <div className={style.form}>
                     <input 
                         className={`${style.inputForms} ${isFieldEmpty('duration') && style.inputFormsEmpty}`} 
                         value={newActivity.duration} 
                         type="number" 
                         name='duration' 
                         onChange={handleChange}
-                        onMouseEnter={() => setHoveredField('duration')}
-                        onMouseLeave={() => setHoveredField(null)}
                         />
                 </div>
                 <div>
-                    {hoveredField === 'duration' && error.duration && <span className={style.errorMessage}>{error.duration}</span>}
+                    { error.duration && <span className={style.errorMessage}>{error.duration}</span>}
                 </div>
+
 {/* ---------------------------------------------------------->> SEASON <<----------------------------------------------------------*/}
-                <div>
-                    <label>Temporada</label>
+                <div className={style.form}>
+                    <label className={style.label}>Temporada</label>
+                </div>
+                <div className={style.form}>
                         <select
-                            className={`${style.inputForms} ${isFieldEmpty('difficulty') && style.inputFormsEmpty}`} 
+                            className={`${style.inputForms} ${isFieldEmpty('season') && style.inputFormsEmpty}`} 
                             name="season" 
                             value={newActivity.season} 
-                            onChange={handleChange} 
-                            onMouseEnter={() => setHoveredField('season')}
-                            onMouseLeave={() => setHoveredField(null)}
+                            onChange={handleChange}
                         >
                             <option value=''>Seleccione una opción</option>
                             <option value="Summer">Summer</option>
@@ -172,21 +183,26 @@ function Form(){
                             <option value="Winter">Winter</option>
                             <option value="Spring">Spring</option>
                         </select>
-                </div>
+                </div> 
                 <div>
-                    {hoveredField === 'season' && error.season && (<span className={style.errorMessage}>{error.season}</span>)}  
+                    {error.season && (<span className={style.errorMessage}>{error.season}</span>)}  
                 </div>
+                </div>
+
 {/* ---------------------------------------------------------->> COUNTRY <<----------------------------------------------------------*/}
+                    <div className={style.countryContainer}>
                     <h2>Escoge los paises a los que les asiganaras tu nueva actividad</h2>
-                    <div>
-                        <div>
+                        <div className={style.scrollableContainer}>
                             {
-                                countries.length >= 1 ?
-                                countries?.map((elem, index) => (
-                                    <label htmlFor='country' key={index}>
-                                        <input type='checkbox' name='country' value={elem.name} key={index} onChange={handleChecked}/>
+                                sortedCountries.length >= 1 ?
+                                sortedCountries?.map((elem, index) => (
+                                    <div key={index}>
+                                        <label htmlFor={`country_${index}`} className={style.countryLabel} key={index}>
+                                        <input type='checkbox' className={style.countryCheckbox} name={`country_${index}`} value={elem.name} key={index} onChange={handleChecked}/>
                                         {elem.name}
-                                    </label>
+                                        </label>
+                                    </div>
+                                    
                                 ))
                                 :undefined
                             }
@@ -195,14 +211,16 @@ function Form(){
                     </div>
 
                 
-                <div>
+            </form>
+
+
+            <div className={style.buttonContainer}>
                     {
                         newActivity.name !== '' && newActivity.difficulty !== '' && newActivity.duration !== '' && newActivity.season !== '' && newActivity.country.length >=1
-                        ? <button className='' type='submit' onClick={ (e) => handleSubmit(e)}>submit</button>
-                        : <button disabled className=''>submit</button>
+                        ? <button className={style.buttonSubmit} type='submit' onClick={ (e) => handleSubmit(e)}>submit</button>
+                        : <button disabled className={style.buttonDisabeld}>submit</button>
                     }
-                </div>
-            </form>
+            </div>
         </div>
     )
 }

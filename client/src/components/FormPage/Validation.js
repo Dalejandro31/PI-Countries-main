@@ -14,7 +14,7 @@ export default function Validation(newActivity){
     // Validar name
     if(newActivity.name === '' || !regex.test(newActivity.name)){
       error.name =
-      'El nombre es obligatorio para crear su Actividad, por favor escriba el Nombre';
+      'El Nombre es Obligario';
     }
     // Validar difficulty
     if(newActivity.difficulty === ''){

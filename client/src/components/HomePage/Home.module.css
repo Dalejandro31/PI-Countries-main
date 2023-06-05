@@ -10,3 +10,36 @@
 .cardHome{
     margin-bottom: 2rem;
 }
+
+.containerOrdered{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.buttonOrdered{
+    margin-left: 2rem;
+    margin-right: 2rem;
+    width: 150px;
+    height: 50px;
+    border-radius: 5px;
+    border: solid 3px rgba(134, 182, 10, 0.669);
+    background-color: #eff6e0;
+
+}
+
+.filterCountry{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+}
+
+.selectedFilter{
+    margin-left: 2rem;
+    margin-right: 2rem;
+    width: 150px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: #eff6e0;
+}
