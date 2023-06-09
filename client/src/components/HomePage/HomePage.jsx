@@ -139,13 +139,13 @@ function Home(){
         </div>
       </div>
         
-      <div>
+      <div className={style.orderPag}>
         <div>
           {
             currentPage === 1 ? (<span></span>) : (<button className="" onClick={e => paginationButtonPrev(e)}>Prev</button>)
           }
         </div>
-        <div>
+        <div className={style.orderPag}>
           <Pagination
             currentPage={currentPage}
             elementsPerPage={elementsPerPage}

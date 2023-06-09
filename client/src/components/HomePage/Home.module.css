@@ -43,3 +43,10 @@
     border-radius: 5px;
     background-color: #eff6e0;
 }
+
+.orderPag{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center
+
+}
