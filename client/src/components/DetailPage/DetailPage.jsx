@@ -22,10 +22,8 @@ function Detail(){
             {selector.hasOwnProperty('name') ? (
                 <div className={style.contenedorHijo}>
                     <div>
-                        <h1>Detail</h1>
-                        <Link to='/home'><button type='submit'>Home Page</button></Link>
-                        <Link to='/form'><button type='submit'>Form Page</button></Link>
-                        <Link to='/'><button type='submit'>Landing Page</button></Link>
+                        <h1>Informacion Detallada del Pais</h1>
+                        <Link to='/home'><button className={style.buttonDetail} type='submit'>Home Page</button></Link>
                     </div>
                     <div className={style.divImagen}>
                         <img className={style.image} src={selector.flag} alt={selector.name} />
@@ -71,7 +69,7 @@ function Detail(){
                                 </div>
                                 <div className={style.contSpan}>
                                     <span className={style.label}>Duration: </span>
-                                    <span className={style.label}>{activity.duration}</span>
+                                    <span className={style.label}>{activity.duration} Horas</span>
                                 </div>
                                 <div className={style.contSpan}>
                                     <span className={style.label}>Season: </span>

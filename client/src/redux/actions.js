@@ -31,7 +31,13 @@ export const getCountryName = (name) => {
         dispatch({type: GET_COUNTRY_NAME, payload: []})
         axios.get('http://localhost:3001/countries/name?name='+name)
         .then((res) => res.data)
-        .then((data) => dispatch({type: GET_COUNTRY_NAME, payload: data}))
+        .then((data) => {
+            if(data.length === 0){
+                alert('No se encuentra el pais con ese Nombre')
+            }
+            dispatch({type: GET_COUNTRY_NAME, payload: data})  
+        })
+        .catch((err) => alert(err));
     }
 }
 
@@ -115,7 +121,11 @@ export const postActivity = (newActivity) => {
             alert('Activiti Created successfully');
         } catch (error) {
             console.log('Error', error);
-            alert('Activity not Created, try again');
+            if (error.response && error.response.status === 404) {
+                alert('Activity already exists');
+            } else {
+                alert('Activity not created, try again');
+            }
         }
     }
 };

@@ -3,7 +3,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Card(props){
-    const { id, name, flag, region } = props;
+    const { id, name, flag, region, population } = props;
     const navigate = useNavigate();
     const handleImageClick = () => {
         navigate(`/detail/${id}`);
@@ -16,6 +16,7 @@ function Card(props){
                 <div className={style.content}>
                     <p className={style.name}>{name}</p>
                     <p className={style.region}>{region}</p>
+                    <p className={style.region}>{population}</p>
                 </div>
             <img className={style.Cardimage} src={flag} alt={name} onClick={handleImageClick}/>
             </div>

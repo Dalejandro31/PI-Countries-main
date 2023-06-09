@@ -37,6 +37,27 @@ async function postActivity(req, res){
             .json({message: 'the require information is missing'})
         }
 
+        const existingActivity = await Activity.findOne({
+            where: {name : name}
+        });
+
+        if(existingActivity){
+            const existingCountry = await Country.findOne({
+                where: {name : country}
+            })
+            const isCountry = await existingActivity.hasCountry(existingCountry);
+
+            if(isCountry){
+                return res
+                .status(STATUS_ERROR)
+                .json({message: 'la actividad ya existe'})
+            }
+            await existingActivity.addCountry(existingCountry);
+            return res 
+            .status(STATUS_OK)
+            .json({message: 'la actividad se ha añadido correctamente'})
+        }
+
         const newActivity= await Activity.create({
             name,
             difficulty,

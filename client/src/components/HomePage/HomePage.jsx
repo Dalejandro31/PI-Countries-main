@@ -39,6 +39,9 @@ function Home(){
   const indexOfFirstElement = indexOfLastElement - elementsPerPage;
   const currentElements = countries.slice(indexOfFirstElement, indexOfLastElement);
 
+
+  ////Manipuladores de eventos, para las interacciones del usuario 
+
   const paginationButtonNext = (e) => {
     e.preventDefault(); 
     setCurrentPage( currentPage + 1);
@@ -54,6 +57,7 @@ function Home(){
     const activity = e.target.value;
     setSelectedActivity(activity);
     dispatch(filterActivity(activity));
+    setCurrentPage(1)
   }
 
   const handlePageCh =  (pageNumber) => {
@@ -64,6 +68,7 @@ function Home(){
     e.preventDefault();
     dispatch(filterContinent(e.target.value))
     setSelectedRegion(e.target.value);
+    setCurrentPage(1)
   }
 
   const handleSort = (e) => {
@@ -85,7 +90,7 @@ function Home(){
 
   return(
     <div className={style.homeContainer}>
-      <NavBar/>
+      <NavBar currentPage={currentPage} setCurrentPage={setCurrentPage}/>
       
 
 
@@ -107,7 +112,7 @@ function Home(){
             className={style.selectedFilter}
             value={selectedRegion}
             >
-              <option value='All'>All Countries</option>
+              <option value='All'>All Continents</option>
               {
                 uniqueRegions.map((region, index) => (
                   <option value={region} key={index}>{region}</option>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState }from 'react';
-import axios from 'axios';
 import style from './Form.module.css';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
@@ -119,6 +118,7 @@ function Form(){
                         value={newActivity.name}  
                         type="text" 
                         name='name' 
+                        placeholder='Nombre de la actividad'
                         onChange={handleChange}
                         />
                     <div>
@@ -137,7 +137,7 @@ function Form(){
                             value={newActivity.difficulty} 
                             onChange={handleChange}
                         >
-                            <option value='' >Seleccione una opción</option>
+                            <option value='' >Dificultad de la actividad</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -159,6 +159,7 @@ function Form(){
                         value={newActivity.duration} 
                         type="number" 
                         name='duration' 
+                        placeholder='Ejmplo: 12' 
                         onChange={handleChange}
                         />
                 </div>
@@ -177,7 +178,7 @@ function Form(){
                             value={newActivity.season} 
                             onChange={handleChange}
                         >
-                            <option value=''>Seleccione una opción</option>
+                            <option value=''>Temporada de la actividad</option>
                             <option value="Summer">Summer</option>
                             <option value="Fall">Fall</option>
                             <option value="Winter">Winter</option>
