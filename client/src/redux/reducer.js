@@ -33,7 +33,7 @@ const configReducer = (state = initialState, action) => {
         case GET_COUNTRY_NAME:
             return{
                 ...state,
-                countries: action.payload
+                countries: action.payload.length === 0 ? state.filterCountry : action.payload,
             }
         case GET_COUNTRY_DETAIL:
             console.log('details', state.countryDetail)    

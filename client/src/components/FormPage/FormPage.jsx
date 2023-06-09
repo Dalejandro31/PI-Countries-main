@@ -78,7 +78,7 @@ function Form(){
             difficulty: '',
             duration: '',
             season: '',
-            country : [],
+            country: [],
         })
     }
 

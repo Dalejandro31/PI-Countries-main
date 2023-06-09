@@ -37,7 +37,7 @@ export const getCountryName = (name) => {
             }
             dispatch({type: GET_COUNTRY_NAME, payload: data})  
         })
-        .catch((err) => alert(err));
+        .catch((err) => alert(`el pais con el nombre ${name} no existe`));
     }
 }
 

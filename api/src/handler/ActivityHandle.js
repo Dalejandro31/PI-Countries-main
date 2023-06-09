@@ -41,21 +41,29 @@ async function postActivity(req, res){
             where: {name : name}
         });
 
-        if(existingActivity){
-            const existingCountry = await Country.findOne({
-                where: {name : country}
-            })
-            const isCountry = await existingActivity.hasCountry(existingCountry);
-
-            if(isCountry){
-                return res
-                .status(STATUS_ERROR)
-                .json({message: 'la actividad ya existe'})
+        if (existingActivity) {
+            const existingCountries = await Country.findAll({
+                where: { name: country },
+            });
+            let activityExists = false;
+            for (const existingCountry of existingCountries) {
+                const isCountry = await existingActivity.hasCountry(existingCountry);
+                if (isCountry) {
+                activityExists = true;
+                break;
+                }
             }
-            await existingActivity.addCountry(existingCountry);
-            return res 
-            .status(STATUS_OK)
-            .json({message: 'la actividad se ha añadido correctamente'})
+            if (activityExists) {
+                return res.status(STATUS_ERROR).json({
+                    message: 'La actividad ya existe',
+                });
+            }
+            for (const existingCountry of existingCountries) {
+                await existingActivity.addCountry(existingCountry);
+            }
+            return res.status(STATUS_OK).json({
+                message: 'La actividad se ha añadido correctamente',
+            });
         }
 
         const newActivity= await Activity.create({
